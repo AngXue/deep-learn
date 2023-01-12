@@ -1,6 +1,8 @@
 # coding:utf-8
 import cv2
 
+# 临时测试程序
+
 if __name__ == '__main__':
     cap = cv2.VideoCapture(0)
     flag = cap.isOpened()
