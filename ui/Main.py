@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QApplication, QDialog
 from raiseCamera.main import openCamera as mOpenCamera
 
 
+# TODO: bug bug bug...
 class MainDialog(QDialog):
     def __init__(self, parent=None):
         super(QDialog, self).__init__(parent)
