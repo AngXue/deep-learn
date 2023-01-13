@@ -26,4 +26,4 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.button.setText(_translate("Dialog", "PushButton"))
+        self.button.setText(_translate("Dialog", "OpenCamera"))

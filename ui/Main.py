@@ -15,7 +15,8 @@ class MainDialog(QDialog):
 
     @staticmethod
     def openCamera():
-        mOpenCamera()
+        # mOpenCamera()
+        print("pass")
 
 
 if __name__ == '__main__':
