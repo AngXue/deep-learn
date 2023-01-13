@@ -1,9 +1,10 @@
 # coding:utf-8
 import cv2
 
+
 # 临时测试程序
 
-if __name__ == '__main__':
+def openCamera():
     cap = cv2.VideoCapture(0)
     flag = cap.isOpened()
 
@@ -23,3 +24,7 @@ if __name__ == '__main__':
             break
     cap.release()
     cv2.destroyAllWindows()
+
+
+if __name__ == '__main__':
+    openCamera()
