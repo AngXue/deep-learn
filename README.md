@@ -1,2 +1,2 @@
 # deep-learn
-A demo.
+- A demo run in Windows.

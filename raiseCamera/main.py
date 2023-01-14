@@ -1,14 +1,17 @@
 # coding:utf-8
 import cv2
 
-if __name__ == '__main__':
+
+# 临时测试程序
+
+def openCamera():
     cap = cv2.VideoCapture(0)
     flag = cap.isOpened()
 
     index = 1
     while flag:
         ret, frame = cap.read()
-        cv2.imshow("Capture_Papalize", frame)
+        cv2.imshow("Capture", frame)
         k = cv2.waitKey(1) & 0xFF
         if k == ord('s'):  # 按下s键，进入下面的保存图片操作
             cv2.imwrite("../res/" + str(index) + ".jpg", frame)
@@ -21,3 +24,7 @@ if __name__ == '__main__':
             break
     cap.release()
     cv2.destroyAllWindows()
+
+
+if __name__ == '__main__':
+    openCamera()
