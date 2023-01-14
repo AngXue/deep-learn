@@ -8,6 +8,7 @@ from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
+# TODO: 加组件和模块化
 class MainDialog(QDialog):
     def __init__(self, parent=None):
         super(QDialog, self).__init__(parent)
