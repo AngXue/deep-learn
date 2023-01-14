@@ -1,11 +1,13 @@
 # coding:utf-8
 
 import sys
-import MainWind
-import cv2
 import time
+
+import cv2
+from PyQt5 import QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QDialog
-from PyQt5 import QtCore, QtGui, QtWidgets
+
+import MainWind
 
 
 # TODO: 加组件和模块化
