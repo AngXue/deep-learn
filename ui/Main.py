@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import QApplication, QDialog
 import MainWind
 
 
-# TODO: 加组件和模块化
+# TODO: 加组件和模块化 new day
 class MainDialog(QDialog):
     def __init__(self, parent=None):
         super(QDialog, self).__init__(parent)
