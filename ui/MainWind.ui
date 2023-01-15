@@ -14,14 +14,7 @@
    <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="5" column="3" alignment="Qt::AlignRight|Qt::AlignBottom">
-    <widget class="QPushButton" name="closeCamera">
-     <property name="text">
-      <string>closeCamera</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0" alignment="Qt::AlignLeft|Qt::AlignBottom">
+   <item row="6" column="0" alignment="Qt::AlignLeft|Qt::AlignBottom">
     <widget class="QPushButton" name="openCamera">
      <property name="minimumSize">
       <size>
@@ -33,31 +26,49 @@
       <cursorShape>WaitCursor</cursorShape>
      </property>
      <property name="text">
-      <string>OpenCamera</string>
+      <string>打开摄像头</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="1" colspan="2">
-    <widget class="QPushButton" name="Exit">
-     <property name="cursor">
-      <cursorShape>ClosedHandCursor</cursorShape>
-     </property>
+   <item row="0" column="3">
+    <widget class="QPushButton" name="train">
      <property name="text">
-      <string>Exit</string>
+      <string>开始训练</string>
      </property>
     </widget>
    </item>
-   <item row="5" column="1" colspan="2">
+   <item row="6" column="3" alignment="Qt::AlignRight|Qt::AlignBottom">
+    <widget class="QPushButton" name="closeCamera">
+     <property name="text">
+      <string>关闭摄像头</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QLineEdit" name="nameInput">
+     <property name="text">
+      <string>填写姓名</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
     <widget class="QPushButton" name="takePhoto">
      <property name="text">
-      <string>takePhoto</string>
+      <string>人脸录入</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="0" colspan="4">
+   <item row="2" column="0" rowspan="4" colspan="4">
     <widget class="QLabel" name="showCamerLabel">
      <property name="text">
       <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="2">
+    <widget class="QPushButton" name="exit">
+     <property name="text">
+      <string>退出</string>
      </property>
     </widget>
    </item>
@@ -114,14 +125,46 @@
    </hints>
   </connection>
   <connection>
-   <sender>Exit</sender>
+   <sender>train</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWind</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>548</x>
+     <y>24</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>316</x>
+     <y>258</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>nameInput</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWind</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>320</x>
+     <y>24</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>316</x>
+     <y>258</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>exit</sender>
    <signal>clicked()</signal>
    <receiver>MainWind</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>24</y>
+     <x>320</x>
+     <y>492</y>
     </hint>
     <hint type="destinationlabel">
      <x>316</x>
