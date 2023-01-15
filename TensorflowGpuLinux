@@ -1,0 +1,10 @@
+conda create -n deep-learn python=3.9
+pip install tensorflow-gpu==2.6.0
+conda install cudatoolkit=11.3
+conda install cudnn=8.2
+pip install protobuf==3.20
+pip install keras==2.6
+pip install PyQt5-tools
+conda install opencv==4.6
+conda install matplotlib==3.7
+nvidia 510
