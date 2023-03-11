@@ -11,8 +11,8 @@ from PyQt5.QtWidgets import QApplication, QDialog
 import ui.MainWind as MainWind
 
 
-# TODO: 加组件和模块化
-# 打包: nuitka --standalone --show-memory --show-progress --output-dir=out --enable-plugin=pyqt5 --windows-disable-console --windows-icon-from-ico=pro.ico demo.py
+# TODO: 加组件和模块化 打包: nuitka --standalone --show-memory --show-progress --output-dir=out --enable-plugin=pyqt5
+#  --windows-disable-console --windows-icon-from-ico=pro.ico demo.py
 class MainDialog(QDialog):
     def __init__(self, parent=None):
         super(QDialog, self).__init__(parent)
