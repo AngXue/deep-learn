@@ -8,6 +8,8 @@ import cv2
 from PyQt5 import QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QDialog
 
+# test
+
 import ui.MainWind as MainWind
 
 
