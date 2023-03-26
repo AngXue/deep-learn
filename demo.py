@@ -13,6 +13,7 @@ import ui.MainWind as MainWind
 
 
 # TODO: 加组件和模块化
+# 打包前请将faceRecognize.py和faceTrain.py移动到demo.py同级目录下
 # 打包: nuitka --standalone --follow-imports --include-data-dir=res=res --mingw64 --show-memory --show-progress --output-dir=out --enable-plugin=pyqt5 --windows-disable-console --windows-icon-from-ico=pro.ico demo.py
 class MainDialog(QDialog):
     def __init__(self, parent=None):
