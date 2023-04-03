@@ -23,7 +23,7 @@ class Ui_MainWind(object):
         self.closeCamera.clicked.connect(MainWind.closeCamera)
         self.train.clicked.connect(MainWind.train)
         self.nameInput.returnPressed.connect(MainWind.nameInput)  # 获取输入的名字
-        self.exit.clicked.connect(MainWind.close)
+        self.batchTest.clicked.connect(MainWind.batchTest)
         self.timer_camera.timeout.connect(MainWind.showCamera)  # 定时器
 
     def setupUi(self, MainWind):
@@ -52,10 +52,11 @@ class Ui_MainWind(object):
         self.showCamerLabel = QtWidgets.QLabel(MainWind)
         self.showCamerLabel.setText("")
         self.showCamerLabel.setObjectName("showCamerLabel")
+        self.showCamerLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.gridLayout.addWidget(self.showCamerLabel, 2, 0, 4, 4)
-        self.exit = QtWidgets.QPushButton(MainWind)
-        self.exit.setObjectName("exit")
-        self.gridLayout.addWidget(self.exit, 6, 2, 1, 1)
+        self.batchTest = QtWidgets.QPushButton(MainWind)
+        self.batchTest.setObjectName("batchTest")
+        self.gridLayout.addWidget(self.batchTest, 6, 2, 1, 1)
         self.retranslateUi(MainWind)
         QtCore.QMetaObject.connectSlotsByName(MainWind)
 
@@ -67,4 +68,4 @@ class Ui_MainWind(object):
         self.closeCamera.setText(_translate("MainWind", "关闭摄像头"))
         self.nameInput.setText(_translate("MainWind", ""))
         self.takePhoto.setText(_translate("MainWind", "人脸录入"))
-        self.exit.setText(_translate("MainWind", "退出"))
+        self.batchTest.setText(_translate("MainWind", "批量测试"))
