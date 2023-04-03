@@ -6,7 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/ui" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/tensorflowM" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="deep-learn" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="lastF" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

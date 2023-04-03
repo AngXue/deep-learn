@@ -7,9 +7,12 @@ import cv2
 from PyQt5 import QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QDialog
 
-import faceRecognize as fR
-import faceTrain as fT
+import face_recognition_knn as frknn
 import ui.MainWind as MainWind
+
+
+MODELPATH = 'res/trainer/trained_knn_model.clf'
+PHOTOPATH = 'res/trainPhotos/'
 
 
 # 打包前请将faceRecognize.py和faceTrain.py移动到demo.py同级目录下
@@ -26,6 +29,7 @@ class MainDialog(QDialog):
         flag, self.image = self.cap.read()
         self.image = cv2.flip(self.image, 1)  # 左右翻转
         self.image = self.recognize(self.image)  # 返回识别结果
+        # self.image = frknn.location_face(self.image)  # 仅框框
         show = cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
         showImage = QtGui.QImage(show.data, show.shape[1], show.shape[0], QtGui.QImage.Format_RGB888)
         self.ui.showCamerLabel.setPixmap(QtGui.QPixmap.fromImage(showImage))
@@ -46,24 +50,18 @@ class MainDialog(QDialog):
         # 关闭摄像头计时器
         self.closeCamera()
         # 如果没有res目录，则新建res目录
-        photoPath = 'res/trainPhotos/'
+        name = self.nameInput()
+        photoPath = PHOTOPATH + name + '/'
         if not os.path.exists(photoPath):
             # 创建目录 res
             os.mkdir(photoPath)
-        imagePaths = [os.path.join(photoPath, f) for f in os.listdir(photoPath)]
-        _ids = []
-        _id = 0
-        if len(imagePaths) != 0:
-            for imagePath in imagePaths:
-                _ids.append(int(os.path.split(imagePath)[1].split('.')[0]))
-            _id = max(_ids)
+        _id = len(os.listdir(photoPath))
         self.cap.open(self.CAM_NUM)
         flag, saveImg = self.cap.read()
         saveImg = cv2.flip(saveImg, 1)  # 左右翻转
-        name = self.nameInput()
-        cv2.imencode('.jpg', saveImg)[1].tofile('res/trainPhotos/' + str(_id+1) + '.' + name + '.jpg')
+        cv2.imencode('.jpg', saveImg)[1].tofile(photoPath + str(_id + 1) + '.jpg')
         self.ui.timer_camera.start(30)
-        self.train()
+        # self.train()
         self.openCamera()
 
     def closeCamera(self):
@@ -75,13 +73,22 @@ class MainDialog(QDialog):
         self.ui.showCamerLabel.setText("<html><head/><body><p align=\"center\"><span style=\" "
                                        "font-size:28pt;\">摄像头已关闭</span><br/></p></body></html>")
 
-    @staticmethod
-    def recognize(img):
-        return fR.face_detect_demo(img)
+    def recognize(self, img):
+        if not os.path.exists(MODELPATH):
+            self.train()
+        return frknn.show_prediction_labels_on_image(img, frknn.predict(img, model_path=MODELPATH))
 
-    @staticmethod
-    def train():
-        fT.train()
+    def train(self):
+        self.closeCamera()
+        if not os.path.exists(PHOTOPATH):
+            os.mkdir(PHOTOPATH)
+        if len(os.listdir(PHOTOPATH)) == 0:
+            self.ui.showCamerLabel.setText("<html><head/><body><p align=\"center\"><span style=\" "
+                                           "font-size:28pt;\">请先录入人脸</span><br/></p></body></html>")
+            return
+        frknn.train(PHOTOPATH, model_save_path=MODELPATH, n_neighbors=1)
+        self.ui.showCamerLabel.setText("<html><head/><body><p align=\"center\"><span style=\" "
+                                       "font-size:28pt;\">训练完毕</span><br/></p></body></html>")
 
     def nameInput(self):
         # 获取输入的姓名
