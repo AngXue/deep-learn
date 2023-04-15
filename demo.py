@@ -117,6 +117,8 @@ class MainDialog(QDialog):
             return
         leftNum = testNum
         testPaths = findAllFile(TESTPATH)
+        if not os.path.exists(SAVEPATH):
+            os.mkdir(SAVEPATH)
         while leftNum > 0:
             self.ui.showCamerLabel.setText("测试中 " + str((testNum - leftNum) / testNum * 100) + "%")
             frknn.save_pre(next(testPaths), model_path=MODELPATH, save_path=SAVEPATH)
