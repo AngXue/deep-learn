@@ -3,11 +3,11 @@ import shutil
 
 
 def classification_image():
-    Image_dir = os.path.join(os.getcwd() + "\\" + "trainPhotos")
+    Image_dir = os.path.join(os.getcwd() + "\\" + "res/trainPhotos")
     # print(Image_dir)
 
-    train_name = os.path.join(os.getcwd() + "\\" + "trainPhotos")
-    test_name = os.path.join(os.getcwd() + "\\" + "testPhotos")
+    train_name = os.path.join(os.getcwd() + "\\" + "res/trainPhotos")
+    test_name = os.path.join(os.getcwd() + "\\" + "res/testPhotos")
 
     if os.path.exists(train_name):
         print(f"{train_name}文件夹已存在")

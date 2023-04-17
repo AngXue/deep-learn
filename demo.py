@@ -2,6 +2,7 @@
 
 import os
 import sys
+import time
 
 import cv2
 from PyQt5 import QtGui, QtWidgets
@@ -11,18 +12,27 @@ import face_recognition_knn as frknn
 import ui.MainWind as MainWind
 
 MODELPATH = 'res/trainer/trained_knn_model.clf'
-PHOTOPATH = 'res/trainPhotos/'
-TESTPATH = 'res/testPhotos/'
+PHOTOPATH = 'res/trainPhotos/'  # 训练集
+TESTPATH = 'res/testPhotos/'  # 测试集
 SAVEPATH = 'res/savePhotos/'
 
 
 # 打包前请将faceRecognize.py和faceTrain.py移动到demo.py同级目录下
-# 打包: nuitka --standalone --follow-imports --include-data-dir=res=res --mingw64 --show-memory --show-progress --output-dir=out --enable-plugin=pyqt5 --windows-disable-console --windows-icon-from-ico=pro.ico demo.py
+# 打包 demo: nuitka --standalone --follow-imports --nofollow-import-to=tkinter --include-data-dir=res=res --mingw64 --show-memory --show-progress --output-dir=out --enable-plugin=pyqt5 --windows-disable-console --windows-icon-from-ico=pro.ico demo.py
+# 打包 resC: nuitka --standalone --follow-imports --mingw64 --show-progress --output-dir=cla --windows-disable-console res/resClassifier.py
 def findAllFile(base):
     for root, ds, fs in os.walk(base):
         for f in fs:
             fullname = os.path.join(root, f)
             yield fullname
+
+
+def statisticsTrain(train_path):
+    # 统计训练集和测试集的图片数量
+    trainNum = 0
+    for path in os.listdir(train_path):
+        trainNum += len(os.listdir(train_path + path))
+    return trainNum
 
 
 class MainDialog(QDialog):
@@ -94,11 +104,21 @@ class MainDialog(QDialog):
             self.ui.showCamerLabel.setText("<html><head/><body><p align=\"center\"><span style=\" "
                                            "font-size:28pt;\">请先录入人脸</span><br/></p></body></html>")
             return
-        self.ui.showCamerLabel.setText("<html><head/><body><p align=\"center\"><span style=\" "
-                                       "font-size:28pt;\">训练中</span><br/></p></body></html>")
+        trainNum = statisticsTrain(PHOTOPATH)  # 统计训练集的图片数量
+        # 每训练完%5的图片，就更新一次界面
+        # for i in range(trainNum):
+        #     if i % (trainNum // 5) == 0:
+        #         self.ui.showCamerLabel.setText("<html><head/><body><p align=\"center\"><span style=\" "
+        #                                        "font-size:28pt;\">训练中</span><br/><span style=\" "
+        #                                        "font-size:28pt;\">已完成{}%</span></p></body></html>".format(
+        #             i * 100 // trainNum))
+        #         time.sleep(5)
+        # 开始计时
+        start = time.time()
         frknn.train(PHOTOPATH, model_save_path=MODELPATH, n_neighbors=1)
-        self.ui.showCamerLabel.setText("<html><head/><body><p align=\"center\"><span style=\" "
-                                       "font-size:28pt;\">训练完毕</span><br/></p></body></html>")
+        # 结束计时
+        end = time.time()
+        self.ui.showCamerLabel.setText("训练数量: " + str(trainNum) + " | 用时: " + str(end - start) + "s")
 
     def nameInput(self):
         # 获取输入的姓名
@@ -119,13 +139,27 @@ class MainDialog(QDialog):
         testPaths = findAllFile(TESTPATH)
         if not os.path.exists(SAVEPATH):
             os.mkdir(SAVEPATH)
+        # 开始计时
+        start = time.time()
         while leftNum > 0:
-            self.ui.showCamerLabel.setText("测试中 " + str((testNum - leftNum) / testNum * 100) + "%")
+            # 每测试完%5的图片，就更新一次界面
+            # if (testNum - leftNum) % (testNum // 5) == 0:
+            #     time.sleep(5)
+            #     self.ui.showCamerLabel.setText("<html><head/><body><p align=\"center\"><span style=\" "
+            #                                    "font-size:28pt;\">测试中</span><br/><span style=\" "
+            #                                    "font-size:28pt;\">已完成{}%</span></p></body></html>".format(
+            #         (testNum - leftNum) * 100 // testNum))
+            #     time.sleep(5)
             frknn.save_pre(next(testPaths), model_path=MODELPATH, save_path=SAVEPATH)
             leftNum -= 1
+        # 结束计时
+        end = time.time()
         accuracy, rejectionRate = frknn.evaluate(SAVEPATH)
-        self.ui.showCamerLabel.setText("测试完毕 正确率: " + str(accuracy * 100) + "% | 拒识率: " + str(rejectionRate * 100) + "%"
-                                       + "\n测试结果保存在: " + os.path.join(os.getcwd(), 'res\\savePhotos'))
+        self.ui.showCamerLabel.setText(
+            "正确率: " + str(round(accuracy * 100, 2)) + "% | 拒识率: " + str(
+                round(rejectionRate * 100, 2)) + "%"
+            + "\n测试数量: " + str(testNum) + " | 用时: " + str(round(end - start, 2)) + "s"
+            + "\n测试结果保存在: " + os.path.join(os.getcwd(), 'res\\savePhotos'))
 
 
 if __name__ == '__main__':
