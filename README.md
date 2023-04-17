@@ -16,47 +16,49 @@
 
 ## 系统要求
 
-- Windows 7 或更高版本
-- Python 3.x（下载 .exe 版本则不需要 Python 环境）
+- Windows 10 或更高版本
+- Python 3.9（下载 .exe 版本则不需要 Python 环境）
 
 ## 安装
 
 ### 直接下载 .exe 文件运行
 
-从 GitHub Releases 页面或者其他来源下载最新版本的 .exe 文件，然后双击运行。
+从 GitHub Releases 页面或者其他来源下载最新版本的 faceRecognize*.zip 文件，解压后找到demo.exe然后双击运行。
 
 ### 本地构建与运行（需要 Python 环境）
 
 1. 克隆仓库并进入项目文件夹：
 
    ```
-   git clone https://github.com/your_github_account/FaceRecognitionApp.git
-   cd FaceRecognitionApp
+   git clone https://github.com/AngXue/deep-learn.git
+   cd deep-learn
    ```
 
 2. 安装依赖：
 
+   参考 `env/lastF.yaml` 文件，使用 conda 创建虚拟环境并安装依赖：
+
    ```
-   pip install -r requirements.txt
+   conda env create -f env/lastF.yaml
    ```
 
 3. 运行应用程序：
 
    ```
-   python main.py
+   python demo.py
    ```
 
 ## 使用说明
 
-1. 导入训练数据：点击 `导入训练数据` 按钮，选择训练数据所在的文件夹。
+1. 导入训练数据：将图片放置在`res/train`文件夹中，每个人的图片放在一个文件夹中，文件夹名即为人名。例如，将张三的图片放在`res/train/zhangsan`文件夹中，将李四的图片放在`res/train/lisi`文件夹中。
    
-2. 训练模型：点击 `训练模型` 按钮，模型将根据导入的训练数据进行训练。
+2. 训练模型：点击 `开始训练` 按钮，模型将根据导入的训练数据进行训练。
 
 3. 进行实时人脸识别：点击 `打开摄像头` 按钮，程序将实时捕捉摄像头中的人脸并进行识别。
 
-4. 批量识别图片并导出结果：点击 `批量识别` 按钮，选择要批量识别的图片所在文件夹。识别完成后，结果将保存在应用程序所在目录的 `results` 文件夹中。
+4. 批量识别图片并导出结果：点击 `批量测试` 按钮，测试图片放置在`res/testPhotos`目录中，文件命名为人名。识别完成后，结果将保存在应用程序所在目录的 `res/savePhotos` 文件夹中， 命名格式为`预测名.真实名.文件后缀`。
 
-5. 评估模型性能：点击 `评估模型` 按钮，选择用于评估的测试图片所在文件夹。程序将根据导入的测试图片评估模型性能，结果将以精度百分比形式显示。
+5. 评估模型性能：`批量测试`完成后会显示准确率、拒识率和用时。
 
 ## 版权和许可
 
